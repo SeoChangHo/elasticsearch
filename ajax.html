@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button type="button" name="button" id="btn1">111111</button>
+    <button type="button" name="button" id="btn2">222222</button>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script>
+
+        function getJsonData() {
+
+            var personInfoJson = new Object();
+            personInfoJson.name = "이름";
+            personInfoJson.age = "나이";
+
+            // 취미는 여러개니까 배열을 만들어 넣는다.
+            var hobbyJsonArray = new Array();
+            var hobby1 = new Object();
+
+            hobby1.hobby = "프로그래밍";
+            hobbyJsonArray.push(hobby1); // 배열에 Object를 넣을 땐 push 함수를 사용
+
+            var hobby2 = new Object();
+            hobby2.hobby = "기타";
+            hobbyJsonArray.push(hobby2);
+
+            var hobby3 = new Object();
+            hobby3.hobby = "음악";
+            hobbyJsonArray.push(hobby3);
+
+            var licenseJsonArray = new Array();
+            var license1 = new Object();
+            license1.issue_no = "1847-38409-2399";
+            license1.license_nm = "내 자격증";
+            license1.level = "9급 마스터";
+            licenseJsonArray.push(license1);
+
+            var license2 = new Object();
+            license2.issue_no = "1847-38409-1111";
+            license2.license_nm = "내가 부여한 요리사 자격증";
+            license2.level = "7급 마스터";
+            licenseJsonArray.push(license2);
+
+            // 본체에 조립
+            personInfoJson.hobbyList = hobbyJsonArray;
+            personInfoJson.licenseList = licenseJsonArray;
+            // 최종 JSON 데이터로 만들기
+            var finalJsonData = JSON.stringify(personInfoJson);
+
+            console.log(finalJsonData)
+
+            var parseJson = JSON.parse(finalJsonData);
+
+            console.log(parseJson);
+
+            return finalJsonData;
+        }
+
+        $('#btn2').on('click',function(){
+            getJsonData();
+        })
+
+        $('#btn1').on('click', function() {
+            $.ajax({
+                url: "http://192.168.10.173:3000/ChanTest",
+                type: 'POST',
+                processData: false,
+                data:getJsonData(),
+                contentType: 'application/json',
+                success: function(data) {
+                    alert(JSON.stringify(data));
+                },
+                error: function() {
+                    alert("Cannot get data");
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
