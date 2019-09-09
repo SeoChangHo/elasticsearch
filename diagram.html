@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="UTF-8" />
+  <title></title>
+  <script language="javascript">
+   function XMLCreate()
+   {
+    var xmlDoc=new ActiveXObject("microsoft.XMLDOM");
+
+    //1. 선언문 <?xml version='1.0' encoding='euc-kr'?>
+    var PInode=xmlDoc.createProcessingInstruction("xml", "version='1.0' encoding='euc-kr'");
+
+    //2. 루트엘리먼트 <compactdiscs></compactdiscs>
+    var rootNode=xmlDoc.createElement("compactdiscs");
+
+    //3. 엘리먼트
+    var compactdiscNode=xmlDoc.createElement("compactdisc");
+    var titleNode=xmlDoc.createElement("title");
+    var priceNode=xmlDoc.createElement("price");
+
+    //4. 텍스트 노드
+    var titleTextNode=xmlDoc.createTextNode("연애시대OST");
+
+    var priceTextNode=xmlDoc.createTextNode("8000");
+
+    //5. 구조화(트리구조)
+    xmlDoc.appendChild(PInode);
+    xmlDoc.appendChild(rootNode);
+
+    rootNode.appendChild(compactdiscNode);
+
+    compactdiscNode.appendChild(titleNode);
+    compactdiscNode.appendChild(priceNode);
+
+    titleNode.appendChild(titleTextNode);
+    priceNode.appendChild(priceTextNode);
+
+    //속성
+    titleNode.setAttribute("numberoftracks", "3");
+
+    //출력
+    document.all.txtResult.value=xmlDoc.xml;
+
+   }
+  </script>
+ </head>
+ <body>
+  <h3>XML 만들기</h3>
+  <button onclick="XMLCreate()">만들기</button>
+  <br/>
+  <textarea cols="80" rows="20" name="txtResult"></textarea>
+ </body>
+</html>

@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 const router = require('./route/router') ;
 const es = require('elasticsearch');
 const cors = require('cors');
+const fs = require('fs');
 
 /*
 NPM 설치 리스트
@@ -19,11 +20,16 @@ NPM 설치 리스트
 -mysql
 
 */
+
 app.use(cors());
+app.use(bodyParser.json());
+
 
  app.get('/', (err, res) => { 
-    res.send("안녕하세요.") 
-    console.log("메인으로 요청이 들어왔습니다.");
+    fs.readFile('diagram.html', function(error, data){
+      res.writeHead(200, {'Content-Type': 'text/html'});
+      res.end(data);
+    })
  })
 
  app.listen(port, err => {
